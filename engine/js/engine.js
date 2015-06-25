@@ -51,6 +51,14 @@ Crafty.load(
 	        sprite_Bomb: [0, 0]
 	    });
 
+	    Crafty.audio.add("bg_music", "assets/airbrushed.mp3");
+
+	    //-- Explosions
+	    Crafty.audio.add("explosion1", "assets/explosion1.mp3");
+	    Crafty.audio.add("explosion2", "assets/explosion2.mp3");
+	    Crafty.audio.add("explosion3", "assets/explosion3.mp3");
+	    Crafty.audio.add("explosion4", "assets/explosion4.mp3");
+
 	}
 );
 
@@ -66,6 +74,9 @@ Crafty.defineScene("gametime", function() {
 
 	//-- Start allowing players to join me
 	Game.Starting = true;
+
+	//-- Music!
+	//Crafty.audio.play("bg_music", -1, 0.4);
 
 }, function() {
 	

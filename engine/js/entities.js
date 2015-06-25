@@ -118,7 +118,7 @@ Crafty.c('Bomberman', {
 
 		this.bombs = [];
 		this.isOverlappingBomb = false;
-		this.bombSize = 10;
+		this.bombSize = 3;
 		this.isLocked = false;
 		this.isDead = false;
 		this.maxBombs = 1;
@@ -179,6 +179,8 @@ Crafty.c('Bomberman', {
 		if (!this.isDead) {
 			this.isDead = true;
 			console.log("Player " + this.n + " Ded!");
+			placeGameEvent(this.n, "Is Dead!");
+			playerHasDied(this.n);
 			this.destroy();
 		}
 	}
@@ -241,6 +243,8 @@ Crafty.c('BombTile', {
 	},
 
 	setExplosion: function() {
+
+		Crafty.audio.play("explosion1", 1, 0.8);
 
 		var pos = this.getGridPosition(),
 		top = left = right = bottom = 0, toRemove = [];

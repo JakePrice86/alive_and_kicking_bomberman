@@ -42,12 +42,13 @@ function movePlayerEntity(pid, dir) {
 		if ((hit == "ShadowedGrassTile") || (hit == "GrassTile")) {	
 			//-- Move Entity
 			Game.players[player].move(dir, Game.map_grid.tile.width);
+			//placeGameEvent(player_id, "Has joined the game!");
 		}
 	}
 
 }
 
-function createPlayer(player_id) {
+function createPlayer(player_id, mobile) {
 
 	//-- Player Limit?
 	var current_player_amount = Game.players.length;
@@ -71,13 +72,13 @@ function createPlayer(player_id) {
 
 			//-- Players get added in certain 'areas'
 			if (current_player_amount == 0) {
-				Game.players.push( Crafty.e('BlackPlayer').at(21, 13).attr({ z: 100 }).attr({ n: player_id }) );
+				Game.players.push( Crafty.e('BlackPlayer').at(21, 13).attr({ z: 100 }).attr({ n: player_id, mobile: mobile }) );
 			} else if (current_player_amount == 1) {
-				Game.players.push( Crafty.e('BlackPlayer').at(1, 1).attr({ z: 100 }).attr({ n: player_id }) );
+				Game.players.push( Crafty.e('BlackPlayer').at(1, 1).attr({ z: 100 }).attr({ n: player_id, mobile: mobile }) );
 			} else if (current_player_amount == 2) {	
-				Game.players.push( Crafty.e('BlackPlayer').at(1, 13).attr({ z: 100 }).attr({ n: player_id }) );
+				Game.players.push( Crafty.e('BlackPlayer').at(1, 13).attr({ z: 100 }).attr({ n: player_id, mobile: mobile }) );
 			} else if (current_player_amount == 3) {
-				Game.players.push( Crafty.e('BlackPlayer').at(21, 1).attr({ z: 100 }).attr({ n: player_id }) );
+				Game.players.push( Crafty.e('BlackPlayer').at(21, 1).attr({ z: 100 }).attr({ n: player_id, mobile: mobile }) );
 			} else {
 				var random = findEmptySpot();
 
@@ -85,9 +86,11 @@ function createPlayer(player_id) {
 					console.log("Not Enough Space!");
 				} else {
 					console.log();
-					Game.players.push( Crafty.e('BlackPlayer').at(random.x, random.y).attr({ z: 100 }).attr({ n: player_id }) );					
+					Game.players.push( Crafty.e('BlackPlayer').at(random.x, random.y).attr({ z: 100 }).attr({ n: player_id, mobile: mobile  }) );					
 				}
 			}
+
+			placeGameEvent(player_id, "Has joined the game!");
 		}
 
 	}
@@ -127,10 +130,11 @@ function layBomb(pid) {
 			};
 
 			var bomb = Crafty.e('BombTile').at(x, y).setBombSize(Game.players[player].bombSize);
+			placeGameEvent(pid, "Has dropped a bomb!");
 			Game.players[player].bombs.push(bomb);
 			var self = Game.players[player];
 			bomb.one('BombExploded', function() {
-				console.log("Your Bomb Ploded");
+				//-- console.log("Your Bomb Ploded");
 				self.bombs.shift();
 			})
 			Game.players[player].isOverlappingBomb = true;
@@ -164,4 +168,51 @@ function findEmptySpot() {
 
 	var r = empty[Math.floor(Math.random() * empty.length)];
 	return r;
+}
+
+function placeGameEvent(player_id, e_string) {
+
+	//-- Lets check the player ID, and match to an internal ID
+	player = false;
+
+	$.each(Game.players, function(p, e) {		
+		//-- Lets check to see if pid is this user
+		if (e.n == player_id) {
+			player = p;
+		}
+	});
+
+	//-- If a player has not been found
+	if (player === false) {
+		console.log("Trying to lay a Bomb");
+	} else {
+		console.log(Game.players[player]);
+		var n = Game.players[player].mobile;
+
+		var im = "assets/images/bomberman_just_1.png";
+		if (e_string == "Is Dead!") { im = "assets/images/argh.png"; }
+
+		$('.game_events ul').prepend('<li><div style="clear: both"><div style="width: 25%; float: left;text-align:center"><img src="' + im + '" /></div><div style="width: 70%; float: left">' + n + '<br />' + e_string + '</div></div></li>')
+
+	}
+}
+
+function playerHasDied(player_number) {
+
+	$.post( "http://pub.curtish.me/dead", { number: player_number } );
+}
+
+function everybodyLovesPowerups() {
+
+	//-- Should we create a powerup
+
+
+}
+
+function ClusterBombEveryone() {
+
+	for( i = 0; i < 10 ; i++ ) {
+		var empty = findEmptySpot();
+		var bomb = Crafty.e('BombTile').at(empty.x, empty.y).setBombSize(5);
+	}
 }

@@ -21,3 +21,18 @@ body {
   	text-align: left;
   	padding: 0 15px;
 }
+
+.game_events {
+	position: absolute;
+	top: 10px;
+	right: 30px;
+	width: 380px;
+	height: 100%;
+}
+
+.game_events ul {
+	list-style-type: none;
+	margin: 00;
+	padding: 10px;
+	color: #FFF;
+}

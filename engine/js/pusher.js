@@ -34,7 +34,7 @@ channel.bind('player_joined', function(data) {
 
 	var o = JSON.parse(data);
 	console.log(data);
-	createPlayer(o.id);
+	createPlayer(o.id, o.number);
 });
 
 
