@@ -8,8 +8,8 @@
 
 	//-- Define our space
 	map_grid: {
-		width:  23,
-		height: 15,
+		width:  44,
+		height: 21,
 		scale: 2,
 		tile: {
 			width:  64,
@@ -77,7 +77,7 @@
 					(x == Game.map_grid.width - 2 && (y == 1 || y == 2) || x == Game.map_grid.width - 3 && y == 1) ||
 					(x == 1 && (y == Game.map_grid.height - 2 || y == Game.map_grid.height - 3) || x == 2 && y == Game.map_grid.height - 2) || 
 					(x == Game.map_grid.width - 2 && (y == Game.map_grid.height - 2 || y == Game.map_grid.height - 3) || x == Game.map_grid.width - 3 && y == Game.map_grid.height - 2);
-					if (!isCorner && Math.random() > 0.35) { 
+					if (!isCorner && Math.random() > 0.55) { 
 						Crafty.e('SoftBlockTile').at(x, y);
 						Game.map_grid.grid[x][y] = 'SoftBlockTile';
 					}

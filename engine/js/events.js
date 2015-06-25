@@ -71,6 +71,8 @@ function createPlayer(player_id, mobile) {
 			//-- Add to screen
 
 			//-- Players get added in certain 'areas'
+
+			/*
 			if (current_player_amount == 0) {
 				Game.players.push( Crafty.e('BlackPlayer').at(21, 13).attr({ z: 100 }).attr({ n: player_id, mobile: mobile }) );
 			} else if (current_player_amount == 1) {
@@ -88,6 +90,17 @@ function createPlayer(player_id, mobile) {
 					console.log();
 					Game.players.push( Crafty.e('BlackPlayer').at(random.x, random.y).attr({ z: 100 }).attr({ n: player_id, mobile: mobile  }) );					
 				}
+			}
+
+			*/
+
+			var random = findEmptySpot();
+
+			if (random == false) {
+				console.log("Not Enough Space!");
+			} else {
+				console.log();
+				Game.players.push( Crafty.e('BlackPlayer').at(random.x, random.y).attr({ z: 100 }).attr({ n: player_id, mobile: mobile  }) );					
 			}
 
 			placeGameEvent(player_id, "Has joined the game!");

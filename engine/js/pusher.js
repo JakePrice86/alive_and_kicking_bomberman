@@ -23,6 +23,7 @@ channel.bind('player_event', function(data) {
 		else if (o.digit == "4") {dir = "w";} 
 		else if (o.digit == "6") {dir = "e";} 
 		else if (o.digit == "8") {dir = "s";} 
+
 		console.log("Direction: " + dir + " Digit: " + o.digit);
 		movePlayerEntity(o.id, dir);
 
