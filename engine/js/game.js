@@ -12,11 +12,14 @@
 		height: 15,
 		scale: 2,
 		tile: {
-			width:  32,
-			height: 32
+			width:  64,
+			height: 64
 		},
 		grid: []
 	},
+
+	//-- Players
+	players: [],
 
 	//-- Define the game's width
 	width: function() {

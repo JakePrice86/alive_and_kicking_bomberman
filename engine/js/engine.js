@@ -14,27 +14,31 @@ Crafty.defineScene("loading", function() {
           .css({ "text-align": "center"})
           .textColor("#FFFFFF");
 
-    //-- Load all art assets for use later
-	Crafty.load(
-		['assets/images/map_tiles_1.png']
-		, function() {
-
-			//-- Our map tiles
-			Crafty.sprite(Game.map_grid.tile.width, 'assets/images/map_tiles_1.png', {
-		        sprite_SolidBlock: [0, 0],
-		        sprite_SoftBlock: [1, 0],
-		        sprite_ShadowedGrass: [2, 0],
-		        sprite_Grass: [3, 0],
-	      	});
-
-		}
-	);
-
 	//-- All loaded, lets start the game
     Crafty.scene('gametime');
 
 
 });
+
+Crafty.load(
+	['assets/images/map_tiles_64.png']
+	, function() {
+
+		//-- Our map tiles
+		Crafty.sprite(Game.map_grid.tile.width, 'assets/images/map_tiles_' + Game.map_grid.tile.width + '.png', {
+	        sprite_SolidBlock: [0, 0],
+	        sprite_SoftBlock: [1, 0],
+	        sprite_ShadowedGrass: [2, 0],
+	        sprite_Grass: [3, 0],
+      	});
+
+      	//-- Bomberman sprites
+      	Crafty.sprite(47, 53, 'assets/images/bomberman_just_1.png', { 
+	        sprite_Black: [0, 0],
+	    });
+
+	}
+);
 
 /*
  * Game Scene
@@ -47,6 +51,7 @@ Crafty.defineScene("gametime", function() {
 	Game.createGridMap();
 
 	//-- Start allowing players to join me
+	Game.players.push( Crafty.e('BlackPlayer').at(Game.map_grid.width - 2, Game.map_grid.height - 2).attr({ z: 100 }) );
 
 }, function() {
 	
