@@ -118,33 +118,14 @@ Crafty.c('Bomberman', {
 
 		this.bombs = [];
 		this.isOverlappingBomb = false;
-		this.bombSize = 2;
+		this.bombSize = 10;
 		this.isLocked = false;
 		this.isDead = false;
 		this.maxBombs = 1;
 
 		this.bind('KeyDown', function(e) {
 			if (e.key == Crafty.keys.SPACE) {
-				if (this.bombs.length < this.maxBombs) {
-					var x = Math.floor((this.x + 5) / Game.map_grid.tile.width);
-					var y = Math.floor((this.y + 26 - 5) / Game.map_grid.tile.height);
-					var p;
-					for (var i = 0; i < this.bombs.length; i++) {
-						p = this.bombs[i].getGridPosition();
-						if (p.i == x && p.j == y){
-							return;
-						}
-					};
-
-					var bomb = Crafty.e('BombTile').at(x, y).setBombSize(this.bombSize);
-					this.bombs.push(bomb);
-					var self = this;
-					bomb.one('BombExploded', function() {
-						console.log("Your Bomb Ploded");
-						self.bombs.shift();
-					})
-					this.isOverlappingBomb = true;
-				}
+				layBomb(0);
 			}
 
 			if (e.key == Crafty.keys.LEFT_ARROW) { movePlayerEntity(0, 'w'); }
@@ -191,13 +172,14 @@ Crafty.c('Bomberman', {
 	},
 
 	stopMovement: function(hitdata) {
-		console.log("AH - need to stop!");		
+		//-- console.log("AH - need to stop!");		
 	},
 
 	die: function() {
 		if (!this.isDead) {
 			this.isDead = true;
-			this.animate('Die', 1);
+			console.log("Player " + this.n + " Ded!");
+			this.destroy();
 		}
 	}
 });
@@ -206,12 +188,6 @@ Crafty.c('Bomberman', {
 Crafty.c('WhitePlayer', {
 	init: function() {
 		this.requires('Bomberman, sprite_White')
-		.reel('WalkDown', 700, [[0,0], [1,0], [2,0], [1,0]])
-		.reel('WalkLeft', 700, [[3,0], [4,0], [5,0], [4,0]])
-		.reel('WalkRight', 700, [[6,0], [7,0], [8,0], [7,0]])
-		.reel('WalkUp', 700, [[9,0], [10,0], [11,0], [10,0]])
-		.reel('Die',  1400, [[12,0], [13,0], [14,0], [15,0], [12,0], [13,0], [14,0], [15,0], [12,0], [13,0], [14,0], [15,0], [16,0], [17,0], [18,0], [19,0]]);
-		this.reel('WalkDown').currentFrame = 1;
 	}
 });
 
@@ -224,24 +200,12 @@ Crafty.c('BlackPlayer', {
 Crafty.c('BluePlayer', {
 	init: function() {
 		this.requires('Bomberman, sprite_Blue')
-		.reel('WalkDown', 700, [[0,2], [1,2], [2,2], [1,2]])
-		.reel('WalkLeft', 700, [[3,2], [4,2], [5,2], [4,2]])
-		.reel('WalkRight', 700, [[6,2], [7,2], [8,2], [7,2]])
-		.reel('WalkUp', 700, [[9,2], [10,2], [11,2], [10,2]])
-		.reel('Die',  1400, [[12,2], [13,2], [14,2], [15,2], [12,2], [13,2], [14,2], [15,2], [12,2], [13,2], [14,2], [15,2], [16,2], [17,2], [18,2], [19,2]]);
-		this.reel('WalkDown').currentFrame = 1;
 	},
 });
 
 Crafty.c('RedPlayer', {
 	init: function() {
 		this.requires('Bomberman, sprite_Red')
-		.reel('WalkDown', 700, [[0,3], [1,3], [2,3], [1,3]])
-		.reel('WalkLeft', 700, [[3,3], [4,3], [5,3], [4,3]])
-		.reel('WalkRight', 700, [[6,3], [7,3], [8,3], [7,3]])
-		.reel('WalkUp', 700, [[9,3], [10,3], [11,3], [10,3]])
-		.reel('Die',  1400, [[12,3], [13,3], [14,3], [15,3], [12,3], [13,3], [14,3], [15,3], [12,3], [13,3], [14,3], [15,3], [16,3], [17,3], [18,3], [19,3]]);
-		this.reel('WalkDown').currentFrame = 1;
 	},
 });
 
@@ -356,7 +320,6 @@ Crafty.c('Explosion', {
 				Game.map_grid.grid[p.i][p.j] = 'GrassTile';
 
 				if (this.stuffToKill[i].has('Bomberman') || this.stuffToKill[i].has('BombTile')) {
-          //this.stuffToKill[i].die();
       }
       else {
       	this.stuffToKill[i].destroy(); 
@@ -397,7 +360,7 @@ Crafty.c('ExplosionCenter', {
 Crafty.c('ExplosionHLeft', {
 	init: function() {
 		this.requires('Explosion, sprite_Explosion_H_Left')
-		.reel('Explode', 1000, [[0,1], [1,1], [2,1], [3,1], [4,1], [3,1], [2,1], [1,1], [0,1]]);
+		.reel('Explode', 1000, [[0,0], [1,0], [2,0], [3,0], [4,0], [3,0], [2,0], [1,0], [0,0]]);
 		this.animate('Explode', 1);
 	}
 });
@@ -405,7 +368,7 @@ Crafty.c('ExplosionHLeft', {
 Crafty.c('ExplosionLeft', {
 	init: function() {
 		this.requires('Explosion, sprite_Explosion_Left')
-		.reel('Explode', 1000, [[0,2], [1,2], [2,2], [3,2], [4,2], [3,2], [2,2], [1,2], [0,2]]);
+		.reel('Explode', 1000,[[0,0], [1,0], [2,0], [3,0], [4,0], [3,0], [2,0], [1,0], [0,0]]);
 		this.animate('Explode', 1);
 	}
 });
@@ -413,7 +376,7 @@ Crafty.c('ExplosionLeft', {
 Crafty.c('ExplosionVTop', {
 	init: function() {
 		this.requires('Explosion, sprite_Explosion_V_Top')
-		.reel('Explode', 1200, [[0,3], [1,3], [2,3], [3,3], [4,3], [3,3], [2,3], [1,3], [0,3]]);
+		.reel('Explode', 1200, [[0,0], [1,0], [2,0], [3,0], [4,0], [3,0], [2,0], [1,0], [0,0]]);
 		this.animate('Explode', 1);
 	}
 });
@@ -421,7 +384,7 @@ Crafty.c('ExplosionVTop', {
 Crafty.c('ExplosionTop', {
 	init: function() {
 		this.requires('Explosion, sprite_Explosion_V_Top')
-		.reel('Explode', 1000, [[0,4], [1,4], [2,4], [3,4], [4,4], [3,4], [2,4], [1,4], [0,4]]);
+		.reel('Explode', 1000, [[0,0], [1,0], [2,0], [3,0], [4,0], [3,0], [2,0], [1,0], [0,0]]);
 		this.animate('Explode', 1);
 	}
 });

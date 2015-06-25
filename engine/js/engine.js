@@ -38,12 +38,12 @@ Crafty.load(
 	    });
 
 	    //-- Explosion?
-	    Crafty.sprite(64, 64, 'assets/images/explosions_64.png', { 
+	    Crafty.sprite(64, 64, 'assets/images/particle_largeBall1.png', { 
 	        sprite_Explosion_Center: [0, 0],
-	        sprite_Explosion_H_Left: [1, 0],
-	        sprite_Explosion_Left: [2, 0],
-	        sprite_Explosion_V_Top: [3, 0],
-	        sprite_Explosion_Top: [4, 0],
+	        sprite_Explosion_H_Left: [0, 0],
+	        sprite_Explosion_Left: [0, 0],
+	        sprite_Explosion_V_Top: [0, 0],
+	        sprite_Explosion_Top: [0, 0],
 	    });
 
 	    //-- Bombs
@@ -65,7 +65,7 @@ Crafty.defineScene("gametime", function() {
 	Game.createGridMap();
 
 	//-- Start allowing players to join me
-	Game.players.push( Crafty.e('BlackPlayer').at(Game.map_grid.width - 2, Game.map_grid.height - 2).attr({ z: 100 }) );
+	Game.Starting = true;
 
 }, function() {
 	
