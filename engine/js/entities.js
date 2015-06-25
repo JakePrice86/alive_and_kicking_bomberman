@@ -16,7 +16,6 @@ Crafty.c('Grid', {
 
   at: function(x, y) {
 
-  	console.log(x + " " + y);
     if (x === undefined && y === undefined) {
       return { x: this.x / Game.map_grid.tile.width, y: this.y / Game.map_grid.tile.height };
     } else {
@@ -48,7 +47,7 @@ Crafty.c('Grid', {
 //-- All tiles should have this info
 Crafty.c('BaseMapTile', {
   init: function() {
-    this.requires('2D, Canvas, Grid, Color, Collision');
+    this.requires('2D, Canvas, Grid, Collision');
   },
 });
 
@@ -68,19 +67,19 @@ Crafty.c('SolidBlockTile', {
 
 Crafty.c('SoftBlockTile', {
   init: function() {
-    this.requires('SolidMapTiles, sprite_SolidBlock');
+    this.requires('SolidMapTiles, sprite_SoftBlock');
   },
 });
 
 Crafty.c('ShadowedGrassTile', {
   init: function() {
-    this.requires('SolidMapTiles, sprite_SolidBlock');
+    this.requires('SolidMapTiles, sprite_ShadowedGrass');
   },
 });
 
 Crafty.c('GrassTile', {
   init: function() {
-    this.requires('SolidMapTiles, sprite_SolidBlock');
+    this.requires('SolidMapTiles, sprite_Grass');
   },
 });
 

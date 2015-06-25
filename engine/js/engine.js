@@ -20,13 +20,12 @@ Crafty.defineScene("loading", function() {
 		, function() {
 
 			//-- Our map tiles
-			Crafty.sprite(32, 'assets/images/map_tiles_1.png', { 
+			Crafty.sprite(Game.map_grid.tile.width, 'assets/images/map_tiles_1.png', {
 		        sprite_SolidBlock: [0, 0],
 		        sprite_SoftBlock: [1, 0],
 		        sprite_ShadowedGrass: [2, 0],
 		        sprite_Grass: [3, 0],
 	      	});
-
 
 		}
 	);
