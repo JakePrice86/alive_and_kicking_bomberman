@@ -37,6 +37,20 @@ Crafty.load(
 	        sprite_Black: [0, 0],
 	    });
 
+	    //-- Explosion?
+	    Crafty.sprite(64, 64, 'assets/images/explosions_64.png', { 
+	        sprite_Explosion_Center: [0, 0],
+	        sprite_Explosion_H_Left: [1, 0],
+	        sprite_Explosion_Left: [2, 0],
+	        sprite_Explosion_V_Top: [3, 0],
+	        sprite_Explosion_Top: [4, 0],
+	    });
+
+	    //-- Bombs
+	    Crafty.sprite(64, 64, 'assets/images/bombs_64.png', { 
+	        sprite_Bomb: [0, 0]
+	    });
+
 	}
 );
 

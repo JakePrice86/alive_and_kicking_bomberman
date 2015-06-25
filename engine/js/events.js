@@ -1,6 +1,9 @@
 //-- PUSHER events
 
 function movePlayerEntity(player, dir) {
+
+	//-- Lets check the player ID
+	if (player == 1) {player = 0;}
 		
 	//-- Lets grab my position now
 	var x = Game.players[player]._x;
@@ -29,6 +32,8 @@ function movePlayerEntity(player, dir) {
 	}
 
 }
+
+
 
 function whatTypeOfBlockAt(x, y) {
 
